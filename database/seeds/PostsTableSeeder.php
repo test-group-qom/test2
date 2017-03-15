@@ -11,6 +11,8 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('posts')->insert([
+            ['title'=>'a2', 'text'=>'dddddddddddddddddddddddd']
+        ]);
     }
 }

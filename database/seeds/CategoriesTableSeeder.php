@@ -11,6 +11,9 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('categories')->insert([
+
+            ['name'=>'ali','parent_id'=>'1']
+        ]);
     }
 }
