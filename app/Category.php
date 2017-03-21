@@ -8,8 +8,13 @@ class Category extends Model
 {
     protected $table='categories';
     protected $fillable=['name','parent_id'];
-    public function posts()
+    public function parent()
     {
-        return $this->hasMany('Post');
+        return $this->belongsTo(Category::class,'parent_id','id');
     }
+    public function childs()
+    {
+        return $this->hasMany(Category::class,'parent_id','id');
+    }
+
 }
