@@ -11,9 +11,17 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert([
 
-            ['name'=>'ali','parent_id'=>'1']
+            DB::table('categories')->insert([
+                'name'=> 'cat'.rand(22,40),
+                'parent_id'=>1,
+                'created_at'=>\Carbon\Carbon::now()
+
+            ]);
+        DB::table('categories')->insert([
+            'name'=> 'cat'.rand(2,9),
+            'parent_id'=>null,
+            'created_at'=>\Carbon\Carbon::now()
         ]);
     }
 }

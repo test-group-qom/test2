@@ -18,7 +18,6 @@ class CreatePersonsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->string('token',100);
             $table->rememberToken();
             $table->boolean('access')->default(0);
             $table->timestamps();

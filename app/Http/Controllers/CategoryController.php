@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Category;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $all= new Category();
-        return $all->all();
+        return Response::json(['data'=>$all->all()],200);
     }
 
     /**
@@ -43,7 +44,8 @@ class CategoryController extends Controller
         $validator=Validator::make($request->input(),$rule);
         if ($validator->fails())
         {
-            return 'data is invalid !!!';
+            $message=$validator->messages();
+            return Response::json(['error'=>$message],404);
         }
         else
         {
@@ -52,12 +54,11 @@ class CategoryController extends Controller
                 'name'=>$request->input('name'),
                 'parent_id'=>$request->input('parent_id')
             ]);
-            return $create->orderBy('id','desc')->first();
+            return Response::json(['data'=>$create->orderBy('id','desc')->first()],200);
 
         }
 
     }
-
     /**
      * Display the specified resource.
      *
@@ -68,7 +69,7 @@ class CategoryController extends Controller
     {
         $objcat=new Category;
         $findone=$objcat->find($id);
-        return $findone;
+        return Response::json(['data'=>$findone],200);
     }
     /**
      * Show the form for editing the specified resource.
@@ -95,16 +96,19 @@ class CategoryController extends Controller
             'parent_id' => 'required'
         ];
         $validator = Validator::make($request->input(), $rule);
-        if ($validator->fails()) {
-            return 'data is invalid !!!';
-        } else {
+        if ($validator->fails())
+        {
+            $message=$validator->messages();
+            return Response::json(['error'=>$message],404);
+        }
+        else
+        {
             $object=Category::find($id);
             $object->update([
                 'name' => $request->input('name'),
                 'parent_id' => $request->input('parent_id')
             ]);
-            return $object->find($id);
-
+            return Response::json(['data'=> $object->find($id)],200);
         }
     }
 

@@ -12,4 +12,9 @@ class Person extends Model
     {
         return $this->hasMany(Post::class);
     }
+    public function files()
+    {
+        return $this->hasMany(File::class); 
+    }
+    
 }

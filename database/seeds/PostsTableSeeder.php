@@ -12,7 +12,16 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         DB::table('posts')->insert([
-            ['title'=>'a2', 'text'=>'dddddddddddddddddddddddd']
+            'title'=>'t'.rand(1,100),
+            'text'=>str_random(50),
+            'person_id'=>1,
+            'created_at'=>\Carbon\Carbon::now()
+        ]);
+        DB::table('posts')->insert([
+            'title'=>'t'.rand(1,100),
+            'text'=>str_random(50),
+            'person_id'=>1,
+            'created_at'=>\Carbon\Carbon::now()
         ]);
     }
 }

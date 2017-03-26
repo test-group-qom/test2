@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Post;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class PostController extends Controller
     public function index()
     {
         $objpost=new Post;
-        return $objpost::all();
+        return Response::json(['data'=>$objpost::all()]);
     }
 
     /**
@@ -44,7 +45,8 @@ class PostController extends Controller
         $validator=Validator::make($request->input(),$rule);
         if($validator->fails())
         {
-            return 'invalid data!!';
+            $message=$validator->messages();
+            return Response::json(['data'=>$message]);
         }
         else {
             $objpost = new Post;
@@ -52,7 +54,7 @@ class PostController extends Controller
             'title'=> $request->input('title'),
             'text' => $request->input('text')
             ]);
-            return  $create->orderBy('id','desc')->first();
+            return Response::json(['data'=>$create->orderBy('id','desc')->first()]);
         }
     }
 
@@ -65,7 +67,7 @@ class PostController extends Controller
     public function show($id)
     {
      $findpost=Post::find($id);
-     return $findpost;
+     return Response::json(['data'=>$findpost]);
     }
 
     /**
@@ -96,17 +98,19 @@ class PostController extends Controller
         $validator=Validator::make($request->input(),$rule);
         if($validator->fails())
         {
-            return 'invalid data!!';
+            $message=$validator->messages();
+            return Response::json(['data'=>$message]);
         }
-        else {
 
+        else
+        {
             $object=Post::find($id);
-             $object->update([
+            $object->update([
                 'title' => $request->input('title'),
                 'text' => $request->input('text')
             ]);
-            $object->update();
-            return 'Updated!!';
+            $jsnupdate=$object->update();
+            return Response::json(['data'=>$jsnupdate]);
         }
     }
 
