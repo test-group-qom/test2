@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PersonsTableSeeder extends Seeder
+class UsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class PersonsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('persons')->insert([
+        DB::table('users')->insert([
             'name'=>str_random(5),
             'email'=>str_random(5).'@gmail.com',
             'password'=>bcrypt('123'),

@@ -39,6 +39,7 @@ class PostController extends Controller
     {
         $rule=
         [
+            'user_id'=>'required'|'regex:/[1-9][0-9]*/',
             'title'=>'required',
             'text'=>'required'
         ];

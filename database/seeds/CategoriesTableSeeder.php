@@ -11,7 +11,6 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-
             DB::table('categories')->insert([
                 'name'=> 'cat'.rand(22,40),
                 'parent_id'=>1,

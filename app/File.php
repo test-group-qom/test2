@@ -6,8 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
-    public function person()
+    protected $table='files';
+    protected $fillable = ['name','extention','path'];
+    
+    public function user()
     {
-        return $this->belongsTo(Person::class);
+        return $this->belongsTo(User::class);
+    }
+    
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
     }
 }

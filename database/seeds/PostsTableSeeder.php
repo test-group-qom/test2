@@ -14,13 +14,15 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
             'title'=>'t'.rand(1,100),
             'text'=>str_random(50),
-            'person_id'=>1,
+            'user_id'=>1,
+            'file_id'=>1,
             'created_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('posts')->insert([
             'title'=>'t'.rand(1,100),
             'text'=>str_random(50),
-            'person_id'=>1,
+            'user_id'=>1,
+            'file_id'=>1,
             'created_at'=>\Carbon\Carbon::now()
         ]);
     }
