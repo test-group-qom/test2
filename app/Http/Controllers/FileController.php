@@ -34,9 +34,24 @@ class FileController extends Controller
         }
 
     }
-    public function showfiles()
+    public function all()
     {
         $showfile= File::all();
         return Response::json([$showfile]);
     }
+    public function destroy($id)
+    {
+        $destroy=\App\File::find($id);
+        if($destroy)
+        {
+            $destroy->delete();
+            return Response::json(['Success' => 'File is Deleted!!']);
+        }
+        else
+        {
+            return Response::json(['error' => 'File is Not Found!!']);
+        }
+
+    }
+
 }

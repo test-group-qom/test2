@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use \App\Http\Middleware\midAuth;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,9 +16,30 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resource('post','PostController');
-Route::resource('comment','CommentController');
-Route::resource('cat','CategoryController');
-Route::post('upload','FileController@index');
-Route::post('upload/showall','FileController@showfiles');
+//------ Post ------
+Route::middleware('midAuth')->post('post','PostController@store');
+Route::middleware('admin')->put('post/{id}','PostController@update');
+Route::middleware('admin')->delete('post/{id}','PostController@destroy');
+Route::get('post/{id}','PostController@show');
+Route::get('post','PostController@index');
+
+//------ Category ------
+Route::middleware('admin')->post('cat','CategoryController@store');
+Route::middleware('admin')->put('cat/{id}','CategoryController@update');
+Route::middleware('admin')->delete('cat/{id}','CategoryController@destroy');
+Route::get('cat/{id}','CategoryController@show');
+Route::get('cat','CategoryController@index');
+
+//------ Comment ------
+Route::middleware('admin')->post('comment','CommentController@store');
+Route::middleware('admin')->delete('comment/{id}','CommentController@destroy');
+Route::get('comment/{id}','CommentController@show');
+
+//------ File ------
+Route::middleware('midAuth')->post('file','FileController@index');
+Route::middleware('midAuth')->get('file/all','FileController@all');
+Route::middleware('admin')->delete('file/{id}','FileController@destroy');
+
+
+
 

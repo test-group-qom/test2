@@ -133,16 +133,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-
         $destroy=Category::find($id);
-        if( $destroy->deleted_at==null)
+        if(!$destroy)
         {
             return Response::json(['errmsg'=>'Not Found'],404);
         }
         else
         {
-            $destroy->delete;
-            return Response::json(['mesg'=>$destroy->name . 'Deleted!!'] ,200);
+            $destroy->delete();
+            $destroy->childs()->delete();
+            return Response::json(['msg'=>$destroy->name . 'Deleted!!'] ,200);
         }
     }
 }

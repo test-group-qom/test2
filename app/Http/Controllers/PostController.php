@@ -17,8 +17,14 @@ class PostController extends Controller
      */
     public function index()
     {
+
         $objpost=new Post;
-        return Response::json(['data'=>$objpost::all()]);
+        if($objpost)
+        {
+            return Response::json(['data'=>$objpost::all()]);
+        }
+        return Response::json(['No Value'],404);
+
     }
 
     /**
@@ -152,15 +158,15 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-
         $des=Post::find($id);
-
-        if($des->deleted_at == null)
+        if(!$des)
+        {
+            return Response::json(['msg'=>'Not found'],404);
+        }
+        else
         {
             $des->delete;
             return Response::json(['msg'=>'Deleted!!!'],200);
         }
-        else
-            return Response::json(['msg'=>'Not found'],404);
     }
 }

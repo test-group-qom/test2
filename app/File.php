@@ -12,7 +12,6 @@ class File extends Model
     protected $hidden=['pivot','created_at','updated_at'];
     protected $table='files';
     protected $fillable = ['name','extention','path'];
-    
     public function user()
     {
         return $this->belongsTo(User::class);

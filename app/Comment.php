@@ -11,6 +11,7 @@ class Comment extends Model
     protected $dates=['deleted_at'];
     protected $table='comments';
     protected $fillable=['post_id','parent_id','text','from','email'];
+    protected $hidden=['post_id','parent_id','deleted_at','updated_at'];
     public function childs()
     {
         return $this->hasMany(Comment::class,'parent_id','id');

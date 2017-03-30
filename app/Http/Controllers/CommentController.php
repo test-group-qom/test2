@@ -75,14 +75,14 @@ class CommentController extends Controller
     public function show($id)
     {
         $find=Comment::find($id);
-        $find->childs;
         if(!$find)
         {
             return Response::json(['errmsg'=>'Not Found'],404);
         }
         else
         {
-            return Response::json(['id'=>$find->created_at['date']],200);
+            $find->childs;
+            return Response::json(['id'=>$find],200);
         }
 
     }
@@ -97,47 +97,7 @@ class CommentController extends Controller
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $rule=[
-            'post_id'=>'required|Numeric|min:1',
-            'parent_id' =>'Numeric|Nullable|min:1',
-            'text'=>'required',
-            'from'=>'required',
-            'email'=>'required|E-Mail'
-        ];
-        $validator=Validator::make($request->input(),$rule);
-        if($validator->fails())
-        {
-            $msgerr=$validator->messages();
-            return Response::json(['errmsg'=>$msgerr]);
-        }
-        else
-        {
-            $object=Comment::find($id);
-            if (! $object)
-            {
-                return Response::json(['errmsg'=>'Not found'],404);
-            }
-            $object->update([
-                'post_id'=>$request->input('post_id'),
-                'parent_id'=>$request->input('parent_id'),
-                'text'=>$request->input('text'),
-                'from'=>$request->input('from'),
-                'email'=>$request->input('email')
-            ]);
-            
-        }
-    }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -147,14 +107,16 @@ class CommentController extends Controller
     public function destroy($id)
     {
         $destroy=Comment::find($id);
-        if ($destroy->deleted_at == null)
+        if ($destroy)
         {
-            $destroy->delete;
+            $destroy->delete();
+            $destroy->childs()->delete();
             return Response::json(['msg'=>'Deleted!!'],200);
         }
         else
         {
             return Response::json(['errmsg'=>'Not found'],404);
+
         }
     }
 }
