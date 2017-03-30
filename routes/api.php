@@ -17,5 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::resource('post','PostController');
+Route::resource('comment','CommentController');
 Route::resource('cat','CategoryController');
+Route::post('upload','FileController@index');
+Route::post('upload/showall','FileController@showfiles');
 

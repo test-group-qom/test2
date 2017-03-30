@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
             'email'=>str_random(5).'@gmail.com',
             'password'=>bcrypt('123'),
             'remember_token'=>str_random(60),
-            'created_at'=>\Carbon\Carbon::now()
+            'created_at'=> date('Y-m-d H:i:s')
         ]);
     }
 }

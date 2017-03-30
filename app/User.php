@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,6 +16,8 @@ class User extends Authenticatable
      *
      * @var array
      */
+    use SoftDeletes;
+    protected $dates=['deleted_at'];
     protected $table='users';
     protected $fillable=['name','email','password','access'];
     public function posts()

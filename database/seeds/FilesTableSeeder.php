@@ -15,7 +15,7 @@ class FilesTableSeeder extends Seeder
             'name'=> 'file1',
             'extention'=>'jpg',
             'path'=> 'upload\file1.jpg',
-            'created_at'=>\Carbon\Carbon::now()
+            'created_at'=> date('Y-m-d H:i:s')
         ]);
     }
 }

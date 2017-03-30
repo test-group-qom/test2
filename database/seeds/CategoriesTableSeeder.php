@@ -14,13 +14,13 @@ class CategoriesTableSeeder extends Seeder
             DB::table('categories')->insert([
                 'name'=> 'cat'.rand(22,40),
                 'parent_id'=>1,
-                'created_at'=>\Carbon\Carbon::now()
+                'created_at'=> date('Y-m-d H:i:s')
 
             ]);
         DB::table('categories')->insert([
             'name'=> 'cat'.rand(2,9),
             'parent_id'=>null,
-            'created_at'=>\Carbon\Carbon::now()
+            'created_at'=> date('Y-m-d H:i:s')
         ]);
     }
 }

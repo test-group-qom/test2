@@ -17,7 +17,7 @@ class CommentsTableSeeder extends Seeder
             'text'=>str_random(30),
             'from'=>'user'.rand(1,200),
             'email'=>'email'.rand(1,200).'@gmail.com',
-            'created_at' =>\Carbon\Carbon::now()
+            'created_at' => date('Y-m-d H:i:s')
         ]);
         DB::table('comments')->insert([
             'post_id'=>1,
@@ -25,7 +25,7 @@ class CommentsTableSeeder extends Seeder
             'text'=>str_random(30),
             'from'=>'user'.rand(1,200),
             'email'=>'email'.rand(1,200).'@gmail.com',
-            'created_at' =>\Carbon\Carbon::now()
+            'created_at' => date('Y-m-d H:i:s')
         ]);
     }
 }
