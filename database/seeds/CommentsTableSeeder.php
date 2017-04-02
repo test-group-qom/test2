@@ -20,7 +20,7 @@ class CommentsTableSeeder extends Seeder
             'created_at' => date('Y-m-d H:i:s')
         ]);
         DB::table('comments')->insert([
-            'post_id'=>1,
+            'post_id'=>2,
             'parent_id'=>1,
             'text'=>str_random(30),
             'from'=>'user'.rand(1,200),

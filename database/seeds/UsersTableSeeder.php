@@ -14,8 +14,9 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name'=>str_random(5),
             'email'=>str_random(5).'@gmail.com',
-            'password'=>bcrypt('123'),
-            'remember_token'=>str_random(60),
+            'password'=>Hash::make('123'),
+            'token'=>str_random(60),
+            //'remember_token'=>'ggg',
             'created_at'=> date('Y-m-d H:i:s')
         ]);
     }

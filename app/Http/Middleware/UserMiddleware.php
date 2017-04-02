@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Response;
 
-class midAuth
+class UserMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,16 +15,18 @@ class midAuth
      */
     public function handle($request, Closure $next)
     {
-        $request->client = null;
+        ($request->client = null);
         $token= $request-> header('token');
-        if(!empty($token) && $user=\App\User::where('remember_token','=',$token)->get()->first())
+        $user=\App\User::where('token','=',$token)->get()->first();
+        if(!empty($token) && $user )
         {
-            if (!empty($user))
+            if ($user->count())
             {
                 $request->client=$user;
                 return $next($request);
             }
         }
-        return Response::json('Access Denied!!',401);
+        else
+            return Response::json('Access Denied!!',401);
     }
 }

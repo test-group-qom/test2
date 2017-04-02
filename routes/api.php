@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use \App\Http\Middleware\midAuth;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,7 +16,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //------ Post ------
-Route::middleware('midAuth')->post('post','PostController@store');
+Route::middleware('user')->post('post','PostController@store');
 Route::middleware('admin')->put('post/{id}','PostController@update');
 Route::middleware('admin')->delete('post/{id}','PostController@destroy');
 Route::get('post/{id}','PostController@show');
@@ -31,14 +30,21 @@ Route::get('cat/{id}','CategoryController@show');
 Route::get('cat','CategoryController@index');
 
 //------ Comment ------
-Route::middleware('admin')->post('comment','CommentController@store');
-Route::middleware('admin')->delete('comment/{id}','CommentController@destroy');
+Route::middleware('admin')->post('/post/comment','CommentController@store');
+Route::middleware('admin')->delete('/post/comment/{id}','CommentController@destroy');
 Route::get('comment/{id}','CommentController@show');
 
 //------ File ------
-Route::middleware('midAuth')->post('file','FileController@index');
-Route::middleware('midAuth')->get('file/all','FileController@all');
+Route::middleware('user')->post('file','FileController@index');
+Route::middleware('user')->get('file/all','FileController@all');
 Route::middleware('admin')->delete('file/{id}','FileController@destroy');
+
+//------ User Login ------
+Route::post('register','RegisterController@register');
+Route::post('register/admin','RegisterController@adminreg');
+Route::middleware('user')->post('/login','RegisterController@login');
+Route::middleware('user')->post('/logout','RegisterController@logout');
+
 
 
 

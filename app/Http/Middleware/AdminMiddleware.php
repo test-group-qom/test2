@@ -18,7 +18,7 @@ class AdminMiddleware
     {
         $request->admin=null;
         $token=$request->header('token');
-        $user = \App\User::where('remember_token',$token)->where('access',1);
+        $user = \App\User::where('token',$token)->where('access',1);
         if(!empty($token) && $user->count() > 0)
         {
             $request->admin=$user->first();
