@@ -41,9 +41,9 @@ Route::middleware('admin')->delete('file/{id}','FileController@destroy');
 
 //------ User Login ------
 Route::post('register','RegisterController@register');
-Route::post('register/admin','RegisterController@adminreg');
+Route::get('logout','RegisterController@logout');
+Route::middleware('admin')->post('register/admin','RegisterController@adminreg');
 Route::middleware('user')->post('/login','RegisterController@login');
-Route::middleware('user')->post('/logout','RegisterController@logout');
 
 
 
