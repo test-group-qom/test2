@@ -9,7 +9,7 @@ class File extends Model
 {
     use SoftDeletes;
     protected $dates=['deleted_at'];
-    protected $hidden=['pivot','created_at','updated_at'];
+    protected $hidden=['pivot','created_at','updated_at','deleted_at'];
     protected $table='files';
     protected $fillable = ['name','extention','path'];
     public function user()

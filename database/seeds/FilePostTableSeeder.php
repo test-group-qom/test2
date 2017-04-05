@@ -11,9 +11,15 @@ class FilePostTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('file_post')->insert([
-            'file_id'=>1,
-            'post_id'=>1
-        ]);
+        $i=1;
+        while($i<=50)
+        {
+            DB::table('file_post')->insert([
+                'file_id'=>rand(1,100),
+                'post_id'=>rand(1,100)
+            ]);
+            
+            $i++;  
+        }
     }
 }

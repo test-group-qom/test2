@@ -3,39 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        return Response::json(['data'=>Comment::all()],200);
+        $comment= \App\Comment::paginate(10);
+        return Response::json(['data'=>$comment],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    
+    public function showCommentsbyPost($id)
     {
-        //
+        //$comfind =\App\Comment::where('post_id','=',$id)->get();
+        $comfind =\App\Comment::class;
+        $comfind=$comfind->where('post_id','=',$id)->get();
+        if ($comfind)
+        {
+        return Response::json($comfind, 200);
+        }
+        else
+        return Response::json(['error-->Not found !!'],404);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request)
     {
         $rule=[
@@ -66,12 +60,7 @@ class CommentController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $find=Comment::find($id);
@@ -87,23 +76,15 @@ class CommentController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function edit($id)
     {
         //
     }
     
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function destroy($id)
     {
         $destroy=Comment::find($id);

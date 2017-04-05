@@ -11,19 +11,17 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('posts')->insert([
-            'title'=>'t'.rand(1,100),
-            'text'=>str_random(50),
-            'user_id'=>1,
-            'file_id'=>1,
-            'created_at'=> date('Y-m-d H:i:s')
-        ]);
-        DB::table('posts')->insert([
-            'title'=>'t'.rand(1,100),
-            'text'=>str_random(50),
-            'user_id'=>1,
-            'file_id'=>1,
-            'created_at'=> date('Y-m-d H:i:s')
-        ]);
+        $i=1;
+        while ($i<=100)
+        {
+            DB::table('posts')->insert([
+                'title'=>'title'.$i,
+                'text'=>str_random(50),
+                'user_id'=>(rand(1,100)),
+                'file_id'=>(rand(1,100)),
+                'created_at'=> date('Y-m-d H:i:s')
+            ]);
+            $i++;
+        }
     }
 }

@@ -11,11 +11,17 @@ class FilesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('files')->insert([
-            'name'=> 'file1',
-            'extention'=>'jpg',
-            'path'=> 'upload\file1.jpg',
-            'created_at'=> date('Y-m-d H:i:s')
-        ]);
+        $i=1;
+        while ($i<=100)
+        {
+            DB::table('files')->insert([
+                'name'=> 'file'.$i,
+                'extention'=>'jpg',
+                'path'=> 'upload\file'.$i.'.jpg',
+                'created_at'=> date('Y-m-d H:i:s')
+            ]);  
+            $i++;
+        }
+        
     }
 }

@@ -36,7 +36,7 @@ class FileController extends Controller
     }
     public function all()
     {
-        $showfile= File::all();
+        $showfile= File::paginate(15);
         return Response::json([$showfile]);
     }
     public function destroy($id)

@@ -20,7 +20,6 @@ class RegisterController extends Controller
         {
             if (Hash::check($request->input('password'), $user->password))
             {
-
                 return Response::json('The User Find!!', 200);
             }
             else
@@ -77,8 +76,13 @@ class RegisterController extends Controller
 
         }
     }
-
-
+    
+    public function alluser()
+    {
+        $users= new \App\User;
+        return Response::json($users->paginate(15),200);
+    }
+    
     public function adminreg(Request $request)
     {
         $user = new \App\User;

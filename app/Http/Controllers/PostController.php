@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Post;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Null_;
 
 class PostController extends Controller
 {
@@ -17,14 +16,12 @@ class PostController extends Controller
      */
     public function index()
     {
-
         $objpost=new Post;
         if($objpost)
         {
-            return Response::json(['data'=>$objpost::all()]);
+            return Response::json($objpost::paginate(15),200);
         }
         return Response::json(['No Value'],404);
-
     }
 
     /**
@@ -58,7 +55,8 @@ class PostController extends Controller
             $message=$validator->messages();
             return Response::json(['data'=>$message],404);
         }
-        else {
+        else
+        {
             $objpost = new Post;
             $create = $objpost::create([
             'title'=> $request->input('title'),

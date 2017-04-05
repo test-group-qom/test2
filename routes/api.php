@@ -30,9 +30,11 @@ Route::get('cat/{id}','CategoryController@show');
 Route::get('cat','CategoryController@index');
 
 //------ Comment ------
-Route::middleware('admin')->post('/post/comment','CommentController@store');
-Route::middleware('admin')->delete('/post/comment/{id}','CommentController@destroy');
+Route::middleware('admin')->delete('comment/{id}','CommentController@destroy');
+Route::post('comment','CommentController@store');
+Route::get('comment','CommentController@index');
 Route::get('comment/{id}','CommentController@show');
+Route::get('post/{id}/comment','CommentController@showCommentsbyPost');
 
 //------ File ------
 Route::middleware('user')->post('file','FileController@index');
@@ -40,12 +42,8 @@ Route::middleware('user')->get('file/all','FileController@all');
 Route::middleware('admin')->delete('file/{id}','FileController@destroy');
 
 //------ User Login ------
+Route::middleware('admin')->get('alluser','RegisterController@alluser');
 Route::post('register','RegisterController@register');
 Route::get('logout','RegisterController@logout');
 Route::middleware('admin')->post('register/admin','RegisterController@adminreg');
 Route::middleware('user')->post('/login','RegisterController@login');
-
-
-
-
-

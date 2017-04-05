@@ -16,9 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $all= new Category();
-        $result= $all::all();
-        return Response::json(['data'=>$result],200);
+        $all= \App\Category::paginate(10);
+        //$result= $all::all();
+        return Response::json(['data'=>$all],200);
     }
 
     /**

@@ -11,21 +11,33 @@ class CommentsTableSeeder extends Seeder
      */
     public function run()
     {
+        $i=1;
+        while($i<=40)
+    {
         DB::table('comments')->insert([
-            'post_id'=>1,
-            'parent_id'=>null,
-            'text'=>str_random(30),
-            'from'=>'user'.rand(1,200),
-            'email'=>'email'.rand(1,200).'@gmail.com',
+            'post_id' => rand(1,100),
+            'parent_id' => null,
+            'text' => str_random(30),
+            'from' => 'user'.rand(1, 100),
+            'email' => 'email'.rand(1, 100).'@gmail.com',
             'created_at' => date('Y-m-d H:i:s')
         ]);
-        DB::table('comments')->insert([
-            'post_id'=>2,
-            'parent_id'=>1,
-            'text'=>str_random(30),
-            'from'=>'user'.rand(1,200),
-            'email'=>'email'.rand(1,200).'@gmail.com',
-            'created_at' => date('Y-m-d H:i:s')
-        ]);
+        $i++;
+    }
+        
+        $j=1;
+        while($j<=60)
+        {
+            DB::table('comments')->insert([
+                'post_id' => rand(1,100),
+                'parent_id' => rand(1,10),
+                'text' => str_random(30),
+                'from' => 'user'.rand(1, 100),
+                'email' => 'email'.rand(1, 100).'@gmail.com',
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+        $j++;
+        }
+        
     }
 }
