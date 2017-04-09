@@ -23,11 +23,11 @@ class Post extends Model
     }
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class)->withTimestamps();
     }
     public function files()
     {
-        return $this->belongsToMany(File::class);
+        return $this->belongsToMany(File::class)->withTimestamps();
     }
     
 }

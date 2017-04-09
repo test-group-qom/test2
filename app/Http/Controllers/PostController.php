@@ -18,18 +18,19 @@ class PostController extends Controller
         }
         return Response::json(['No Value'],404);
     }
-
-
-
-
+ 
+    
+    
     public function store(Request $request)
     {
         $rule=
         [
-            'file_id'=>'Nullable|numeric|min:1',
             'user_id'=>'required|numeric|min:1',
             'title'=>'required',
-            'text'=>'required'
+            'text'=>'required',
+            'cat_id.*'=> 'required|numeric|exists:categories,id,deleted_at,NULL',
+            'file_id.*'=>'Nullable|numeric|exists:files,id,deleted_at,NULL'
+
         ];
         $validator=Validator::make($request->input(),$rule);
         if($validator->fails())
@@ -44,12 +45,19 @@ class PostController extends Controller
             'title'=> $request->input('title'),
             'text' => $request->input('text'),
             'user_id'=>$request->input('user_id'),
-            'file_id'=>$request->input('file_id'),
             ]);
-            return Response::json(['data'=>$create->orderBy('id','desc')->first()],201);
+            
+            if ($create)
+            {
+               $file_id=$request->input('file_id');
+               $cat_id =$request->input('cat_id');
+               $create->categories()->sync($cat_id);
+               $create->files()->sync($file_id);
+            }
+            
+            return Response::json(['data'=>$create->orderBy('id','desc')->first(),'files'=>$create->files,'categories'=>$create->categories],201);
         }
     }
-
 
 
     public function show($id)
@@ -71,7 +79,6 @@ class PostController extends Controller
                  'comment'=>$findpost->comments()->get(['comments.id','comments.text',
                  'comments.from','comments.email']),
                  'users'=>$findpost->user()->get(['users.id','users.name']),
-                 'files'=>$findpost->files()->get(['files.id','files.name'])
              ],200);
         }
     }
@@ -83,10 +90,11 @@ class PostController extends Controller
     {
         $rule=
             [
-                'file_id'=>'Nullable|numeric|min:1',
                 'user_id'=>'required|numeric|min:1',
                 'title'=>'required',
-                'text'=>'required'
+                'text'=>'required',
+                'file_id.*'=>'Nullable|numeric|min:1',
+                'cat_id.*'=>'required|numeric|min:1',
             ];
         $validator=Validator::make($request->input(),$rule);
         if($validator->fails())
@@ -96,7 +104,7 @@ class PostController extends Controller
         }
         else
         {
-            $object=Post::find($id);
+          $object=Post::find($id)  ;
             if (! $object)
             {
                 return Response::json(['errmsg'=>'Not found'],404);
@@ -105,13 +113,17 @@ class PostController extends Controller
                 'title'=> $request->input('title'),
                 'text' => $request->input('text'),
                 'user_id'=>$request->input('user_id'),
-                'file_id'=>$request->input('file_id'),
             ]);
-            return Response::json(['data'=>$object::orderBy('id','desc')->first()]);
+            if ($object)
+            {
+                $file_id=$request->input('file_id');
+                $cat_id=$request->input('cat_id');
+                $object->files()->sync($cat_id);
+                $object->categories()->sync($file_id);
+                return Response::json(['data'=>$object::orderBy('id','desc')->first()]);
+            }
         }
     }
-
-
 
 
     public function destroy($id)

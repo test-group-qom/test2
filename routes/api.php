@@ -29,6 +29,13 @@ Route::middleware('admin')->delete('cat/{id}','CategoryController@destroy');
 Route::get('cat/{id}','CategoryController@show');
 Route::get('cat','CategoryController@index');
 
+
+//-----------
+Route::get('postbycat/{id}','CategoryPostController@showpostsbycat');
+Route::get('catbypost/{id}','CategoryPostController@showcatsbypost');
+
+
+
 //------ Comment ------
 Route::middleware('admin')->delete('comment/{id}','CommentController@destroy');
 Route::post('comment','CommentController@store');
