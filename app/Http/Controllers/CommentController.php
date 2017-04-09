@@ -19,9 +19,7 @@ class CommentController extends Controller
     
     public function showCommentsbyPost($id)
     {
-        //$comfind =\App\Comment::where('post_id','=',$id)->get();
-        $comfind =\App\Comment::class;
-        $comfind=$comfind->where('post_id','=',$id)->get();
+        $comfind =\App\Comment::where('post_id','=',$id)->get();
         if ($comfind)
         {
         return Response::json($comfind, 200);
@@ -63,26 +61,17 @@ class CommentController extends Controller
 
     public function show($id)
     {
-        $find=Comment::find($id);
-        if(!$find)
-        {
-            return Response::json(['errmsg'=>'Not Found'],404);
+        $find = Comment::find($id);
+
+        if (!$find) {
+            return Response::json(['errmsg' => 'Not Found'], 404);
+        } else {
+            $find->childs->each(function ($c) {
+                $c->childs;
+            });
+            return Response::json($find, 200);
         }
-        else
-        {
-            $find->childs;
-            return Response::json(['id'=>$find],200);
-        }
-
     }
-
-
-
-    public function edit($id)
-    {
-        //
-    }
-    
 
 
     public function destroy($id)
